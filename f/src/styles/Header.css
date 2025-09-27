@@ -1,0 +1,15 @@
+
+.navigation-menu-list {
+  display: flex;
+  gap: 1rem;
+}
+
+.link-color {
+  border-radius: 10px;
+  font-size: x-large;
+  font-weight: bolder;
+  color: rgb(150, 136, 111);
+}
+.link-color:active {
+  transform: scale(110%);
+}

@@ -1,0 +1,24 @@
+.main-layout-container {
+  background-color: rgb(81, 54, 48);
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+.main-layout-header {
+  background-color: rgb(220, 177, 168);
+  position: absolute;
+  top: 5rem;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 40px;
+}
+.main-layout-content {
+  /* background-color: orchid; */
+  display: flex;
+  height: 100%;
+  width: 100%;
+
+}
