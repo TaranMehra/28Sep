@@ -1,73 +1,42 @@
-# React + TypeScript + Vite
+# Responsive Layout
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+* used previos further inside divs and used flex and gred for responsiveness
 
-Currently, two official plugins are available:
+### * started from layout created three div
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* one who contain header( the header is absolute)
+* one for content
+* one for footer(did not created yet)
+* above two are inside the a container which is main
 
-## React Compiler
+### Header
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+* header have position absolute
 
-## Expanding the ESLint configuration
+### HOME
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+* home have main-container who cover up the whole display
+  * first div inside is for header-backside (used also div technique here with null div)
+  * second div is .chat-heading-container used to show the heading
+  * third is for content which has flex : 1
+    ```
+    (
+        <div className="main-layout-container">
+          <div className="main-layout-header">
+            <Header />
+          </div>
+          <div className="main-layout-content">
+            <Outlet />
+          </div>
+        </div>
+      );
+    ```
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# Chat-UI
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+used shadcn
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Home
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+* FormEvent & FormEventHandler
+* use of useState
