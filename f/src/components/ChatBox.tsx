@@ -8,47 +8,98 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar";
 import {
+  useEffect,
+  useRef,
   useState,
   type ChangeEvent,
   type FormEvent,
-  type FormEventHandler,
 } from "react";
-import { Toaster } from "@/components/ui/sonner";
-import { toast } from "sonner";
 
 function ChatBox() {
-  const [message, setMessage] = useState<string>("");
-  const [sendingMessages, setSendingMessages] = useState<
-    string[]
-  >(["1"]);
+  const [messages, setMessages] = useState<
+    {
+      direction: "incoming" | "outgoing" | "draft";
+      message: string;
+      time: string;
+    }[]
+  >([]);
 
-  //   const handleSubmit = (
-  //     e: FormEvent<HTMLFormElement>
-  //   ) => {};
+  const lastItemRef = useRef<HTMLLIElement | null>(null);
 
-  /* const handleSubmit: FormEventHandler<HTMLFormElement> = (
-    e
-  ) => {
-    e.preventDefault();
-    };
-    
-    either declare func type using handler or object as below*/
-  const handleSubmit = (
-    e: FormEvent<HTMLFormElement>
-    //FormEvent telling parameter object type
-  ) => {
-    e.preventDefault();
-    console.log("Submitted value:", message);
-    setSendingMessages((prev) => [...prev, message]);
-    setMessage("");
-  };
+  // auto-scroll on new message
+  useEffect(() => {
+    if (lastItemRef.current) {
+      lastItemRef.current.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  }, [messages]);
 
-  //updating message
-  const handelChange = (
+  // handle input change → create/modify draft
+  const handleChange = (
     e: ChangeEvent<HTMLInputElement>
   ) => {
-    setMessage(e?.target?.value);
+    setMessages((prev) => {
+      const copy = [...prev];
+
+      /* when user starts typing his first alphabet type we set direction === draft, a new message
+      then every alphabet trigger else , so we can show the message to user as he type and store completed message */
+      if (
+        !copy.length ||
+        copy[copy.length - 1].direction !== "draft"
+      ) {
+        copy.push({
+          direction: "draft",
+          message: e.target.value,
+          time: new Date().toLocaleTimeString(),
+        });
+      } else {
+        copy[copy.length - 1].message = e.target.value;
+        copy[copy.length - 1].time =
+          new Date().toLocaleTimeString();
+      }
+      //returning fully completed message with direction = draft
+      return copy;
+    });
   };
+
+  // submit → convert draft to outgoing
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setMessages((prev) => {
+      const copy = [...prev]; //previus messages
+      if (!copy.length) return prev; //if message array is empty
+      const last = copy[copy.length - 1];
+      if (
+        last.direction === "draft" &&
+        last.message.trim()
+      ) {
+        last.direction = "outgoing";
+      }
+
+      return [...copy];
+    });
+  };
+
+  // simulate incoming message (for demo)
+  useEffect(() => {
+    if (
+      messages.length &&
+      messages[messages.length - 1].direction === "outgoing"
+    ) {
+      setTimeout(() => {
+        setMessages((prev) => [
+          ...prev,
+          {
+            direction: "incoming",
+            message: "Got it! ✅",
+            time: new Date().toLocaleTimeString(),
+          },
+        ]);
+      });
+    }
+  }, [messages]);
+
   return (
     <div className="chat-container">
       <div className="chat-header">
@@ -57,44 +108,42 @@ function ChatBox() {
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </div>
+
       <div className="chat-content">
-        <ul className="incoming-messages-ul">
-          {sendingMessages?.map(
-            (value, index) => (
-              // <Alert className="message-box">
-
-              <li className="messages-li" key={index}>
-                {value}
+        <ul className="messages-list">
+          {messages
+            .filter((msg) => msg.direction !== "draft")
+            .map((msg, index) => (
+              <li
+                key={index}
+                ref={
+                  index === messages.length - 1
+                    ? lastItemRef
+                    : null
+                }
+                className={`message-bubble ${msg.direction}`}
+              >
+                {msg.message}
+                <span className="time">{msg.time}</span>
               </li>
-            )
-
-            // </Alert>
-          )}
-        </ul>
-        <ul className="outgoing-messages-ul">
-          {sendingMessages?.map((value, index) => (
-            <li className="messages-li" key={index}>
-              {value}
-            </li>
-          ))}
+            ))}
         </ul>
       </div>
+
       <div className="chat-footer">
-        <form
-          onSubmit={handleSubmit}
-          className="chat-footer"
-        >
+        <form onSubmit={handleSubmit} className="chat-form">
           <Input
-            className="input-box-div"
-            type="type"
-            value={message}
-            onChange={(e) => handelChange(e)}
+            type="text"
+            value={
+              messages[messages.length - 1]?.direction ===
+              "draft"
+                ? messages[messages.length - 1].message
+                : ""
+            }
+            onChange={handleChange}
+            placeholder="Type a message..."
           />
-          <Button
-            className="send-arrow-div"
-            type="submit"
-            variant="outline"
-          >
+          <Button type="submit" variant="outline">
             <IoIosSend />
           </Button>
         </form>

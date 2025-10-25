@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsc && node ./dist/index.js ",
-    "dev": "nodemon --exec \"bun run start \" ext ts --watch src",
-    "devs": "concurrently \" tsc -w \"  \" nodemon ./dist/index.js \" "
+    "devs": "nodemon --exec \"bun run start \" ext ts --watch src",
+    "dev": "concurrently \" tsc -w \"  \" nodemon ./dist/index.js \" "
   },
   "keywords": [],
   "author": "",
@@ -21,7 +21,12 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
+    "@auth/express": "^0.12.0",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
     "express": "^5.1.0",
-    "socket.io": "^4.8.1"
+    "mongoose": "^8.19.1",
+    "socket.io": "^4.8.1",
+    "zod": "^4.1.12"
   }
 }
