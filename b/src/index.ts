@@ -12,17 +12,32 @@ import { authenticationFunc } from "./routers/auth.route.js";
 const port = process.env.PORT || 3000;
 
 const app = express();
+app.use(
+  cors({
+    // origin: "*",
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+// app.use("/auth/", authenticationFunc);
+app.use("/auth/", authenticationFunc);
+// app.use(/^\/auth\/.*$/, authenticationFunc);
+app.set("trust proxy", true);
+app.use("/api", route);
 app.use(express.json());
-app.get("/", (req: Request, res: Response) => {
-  return res.send("hello");
+app.use(express.urlencoded({ extended: true }));
+app.get("/seee", (req: Request, res: Response) => {
+  // return res.send("hello");
+  return res.redirect("/chat");
 });
-
 const MainServer = createServer(app);
 
 //i have must allow request via cors in socket server also
 const socketServer = new Server(MainServer, {
   cors: {
-    origin: "*",
+    // origin: "*",
+    origin: "http://localhost:5173",
+    credentials: true,
   },
 });
 
@@ -31,14 +46,13 @@ WebSocketConnection(socketServer);
 
 //calling auth.route.ts (for authentication)
 // app.use("/auth/*", ExpressAuth({ providers: authenticationFunc as any }));
-app.use("/auth", authenticationFunc);
+// app.use("/auth", authenticationFunc);
 
 //connecting the db
 // await checkConnection();
 // await checkConnection();
 
 //all routes directed to
-app.use("/api", route);
 //create users schema's and db, and make sign-up working
 MainServer.listen(port, () => {
   console.log(`Server Listen on = ${port}`);

@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import {  findUserByUsername, UserSignUpStoreFunction } from "../lib/models/user.model.js";
+import { findUserByUsername, UserSignUpStoreFunction } from "../lib/models/user.model.js";
 import bcrypt from "bcryptjs";
 import { ReturnResponse } from "../lib/ReturnResponse.js";
 import { checkConnection } from "../lib/connection.js";
@@ -16,7 +16,7 @@ export const signUpController = async (req: Request, res: Response) => {
       return ReturnResponse(res, 201, false, "User Already Registered", "/user.model.ts/checkUserNew");
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = password; //await bcrypt.hash(password, 10);
 
     const result = await UserSignUpStoreFunction(username, email, hashedPassword);
     if (result?.id) {

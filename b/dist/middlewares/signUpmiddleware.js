@@ -4,7 +4,9 @@ export const signUpmiddleware = async (req, res, next) => {
     try {
         const result = signUpSchema.safeParse(req.body);
         if (!result.success) {
-            console.log("safeParse Error : ", result.error);
+            console.log("safeParse Error : ", result.error.issues[0]?.message);
+            // const {origin} = result?.error?.issues[0]
+            return ReturnResponse(res, 500, false, `${result.error.issues[0]?.message}`, "middlewares/signUpmiddleware", result.error);
         }
         else {
             result.data;

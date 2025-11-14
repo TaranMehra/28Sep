@@ -1,0 +1,10 @@
+.login-main-container {
+  background-color: rgb(44, 38, 38);
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  align-items: center;
+  align-self: center;
+  padding: 20%;
+  box-sizing: border-box;
+}

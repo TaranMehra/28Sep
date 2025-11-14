@@ -9,11 +9,11 @@ const AllConnectedUsers = new Map();
 export const WebSocketConnection = (socketServer: Server) => {
   socketServer.on("connection", (socket) => {
     AllConnectedUsers.set(socket.id, socket.handshake.auth.username);
-    console.log(`${socket.handshake.auth.username} is Connected , below is all connected users`);
-    console.log(`${socket.id} settled id`);
+    // console.log(`${socket.handshake.auth.username} is Connected , below is all connected users`);
+    // console.log(`${socket.id} settled id`);
 
     AllConnectedUsers.forEach((value, index) => {
-      console.log(`${value} : ${index}`);
+      // console.log(`${value} : ${index}`);
     });
     SocketChatLogicFunc(socket);
   });

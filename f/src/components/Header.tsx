@@ -31,8 +31,8 @@ function Header() {
           </NavigationMenuItem>
           <NavigationMenuItem>
             <NavigationMenuLink asChild>
-              <Link className="link-color" to="/more">
-                More
+              <Link className="link-color" to="/sign-up">
+                Sing-Up
               </Link>
             </NavigationMenuLink>
           </NavigationMenuItem>

@@ -1,0 +1,8 @@
+.sign-in-main-container{
+    background-color: rgb(42, 20, 20);
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
