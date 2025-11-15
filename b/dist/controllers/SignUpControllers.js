@@ -11,7 +11,7 @@ export const signUpController = async (req, res) => {
         if (alreadyUserRegistered) {
             return ReturnResponse(res, 201, false, "User Already Registered", "/user.model.ts/checkUserNew");
         }
-        const hashedPassword = password; //await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);
         const result = await UserSignUpStoreFunction(username, email, hashedPassword);
         if (result?.id) {
             return ReturnResponse(res, 200, true, "User Registerd", "/user.model.ts");

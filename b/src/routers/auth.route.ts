@@ -5,7 +5,7 @@ import Credentials from "@auth/express/providers/credentials";
 import { checkConnection } from "../lib/connection.js";
 import { UserModel } from "../lib/models/Schemas.Model.js";
 import { findUserByUsername } from "../lib/models/user.model.js";
-import { email, string } from "zod";
+import { email, string, success } from "zod";
 import { ReturnResponse } from "../lib/ReturnResponse.js";
 import { skipMiddlewareFunction } from "mongoose";
 import "dotenv/config";
@@ -14,6 +14,7 @@ import type {
   // Session,
   // User,
 } from "@auth/core/types";
+import bcrypt from "bcryptjs";
 
 // export const authenticationFunc = ExpressAuth({
 export const authConfig: AuthConfig = {
@@ -37,19 +38,29 @@ export const authConfig: AuthConfig = {
       },
       async authorize(credentials): Promise<any> {
         //must change return type as i return custom user
+        
         const { username, password } = credentials;
 
         await checkConnection();
 
         const user = await findUserByUsername(username as string);
         if (!user) {
-          // ReturnResponse(res)
           throw new Error("User Not Found");
-          // return null;
         }
 
-        // console.log("is user is that : ", user);
-        return user;
+        const hashedPassword = user?.password;
+        if (hashedPassword) {
+          const result = await bcrypt.compare(password as string, hashedPassword);
+          console.log(`result! ${result!}`);
+          if (result) {
+            console.log("correct pass returning user");
+            return user;
+          } else {
+            console.log("wrong pass returning null");
+            // return null;
+            throw new Error("Password Incorrect",);
+          }
+        }
       },
     }),
   ],

@@ -23,9 +23,9 @@ app.use(
 app.use("/auth/", authenticationFunc);
 // app.use(/^\/auth\/.*$/, authenticationFunc);
 app.set("trust proxy", true);
-app.use("/api", route);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/api", route);
 app.get("/seee", (req: Request, res: Response) => {
   // return res.send("hello");
   return res.redirect("/chat");

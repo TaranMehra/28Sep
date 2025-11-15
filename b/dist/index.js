@@ -19,9 +19,9 @@ app.use(cors({
 app.use("/auth/", authenticationFunc);
 // app.use(/^\/auth\/.*$/, authenticationFunc);
 app.set("trust proxy", true);
-app.use("/api", route);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/api", route);
 app.get("/seee", (req, res) => {
     // return res.send("hello");
     return res.redirect("/chat");
