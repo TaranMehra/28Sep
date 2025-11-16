@@ -1,8 +1,5 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-} from "react";
+import { AuthSessionGet } from "@/lib/dbOperations";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 import type { ReactNode } from "react";
 
@@ -11,29 +8,29 @@ type NameContextType = {
   setName: (name: string) => void;
 };
 
-const NameContext = createContext<
-  NameContextType | undefined
->(undefined);
+// 1
+const NameContext = createContext<NameContextType | undefined>(undefined);
 
-export const NameProvider = ({
-  children,
-}: {
-  children: ReactNode;
-}) => {
+// 2
+export const NameProvider = ({ children }: { children: ReactNode }) => {
+  const [userInfo, setUserInfo] = useState();
   const [name, setName] = useState("");
-  return (
-    <NameContext.Provider value={{ name, setName }}>
-      {children}
-    </NameContext.Provider>
-  );
+
+  useEffect(() => {
+    (async () => {
+      const user = (await AuthSessionGet()) as any;
+      console.log("got user like this ", user.data);
+      setUserInfo(user);
+    })();
+  }, []);
+  return <NameContext.Provider value={{ name, setName }}>{children}</NameContext.Provider>;
 };
 
+// 3
 export const useName = () => {
   const context = useContext(NameContext);
   if (!context) {
-    throw new Error(
-      "useName must be used within a NameProvider"
-    );
+    throw new Error("useName must be used within a NameProvider");
   }
   return context;
 };

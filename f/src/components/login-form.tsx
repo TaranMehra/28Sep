@@ -5,7 +5,7 @@ import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui
 import { Input } from "@/components/ui/input";
 import { useReducer, type FormEventHandler } from "react";
 import { Link, Navigate, redirect, useNavigate } from "react-router-dom";
-import { SendLoginData } from "@/lib/dbOperations";
+import { AuthSessionGet, SendLoginData } from "@/lib/dbOperations";
 import { toast } from "sonner";
 
 interface FormData {
@@ -35,7 +35,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
       const result = await SendLoginData(state);
       const { user } = result;
       if (user) {
-        console.log("user is presenttttt :::resutl is : ", user);
+        // console.log("user is presenttttt :::resutl is : ", user);
         if (user) navigate("/chat");
         // const {  } = result.data;
         // toast("Welcome", {

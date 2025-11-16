@@ -30,25 +30,31 @@ export const authConfig = {
             },
             async authorize(credentials) {
                 //must change return type as i return custom user
-                const { username, password } = credentials;
-                await checkConnection();
-                const user = await findUserByUsername(username);
-                if (!user) {
-                    throw new Error("User Not Found");
+                try {
+                    const { username, password } = credentials;
+                    await checkConnection();
+                    const user = await findUserByUsername(username);
+                    if (!user) {
+                        throw new Error("User Not Found");
+                    }
+                    const hashedPassword = user?.password;
+                    if (hashedPassword) {
+                        const result = await bcrypt.compare(password, hashedPassword);
+                        console.log(`result! ${result}`);
+                        if (result) {
+                            console.log("correct pass returning user");
+                            return user;
+                        }
+                        else {
+                            console.log("wrong pass returning null");
+                            // return null;
+                            throw new Error("Password Incorrect");
+                        }
+                    }
                 }
-                const hashedPassword = user?.password;
-                if (hashedPassword) {
-                    const result = await bcrypt.compare(password, hashedPassword);
-                    console.log(`result! ${result}`);
-                    if (result) {
-                        console.log("correct pass returning user");
-                        return user;
-                    }
-                    else {
-                        console.log("wrong pass returning null");
-                        // return null;
-                        throw new Error("Password Incorrect");
-                    }
+                catch (error) {
+                    console.log("he has through the error ");
+                    throw new Error("Invalid Credentials While Sign-IN", error);
                 }
             },
         }),

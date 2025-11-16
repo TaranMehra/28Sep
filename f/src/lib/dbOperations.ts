@@ -17,22 +17,6 @@ export const SendSignUpData = async (data: SignUpDataType) => {
   const result = await ax_instance.post("/api/auth/sign-up", data);
   return result;
 };
-// export const SendLoginData = async (data: LoginDataType) => {
-// const getToken = await ax_instance.get("/auth/csrf");
-// const csrfRes = await ax_instance.get("/auth/csrf", { withCredentials: true });
-// const csrfToken = csrfRes.data.csrfToken;
-
-// const { csrfToken } = getToken.data;
-// console.log(csrfToken);
-//   if (csrfToken) {
-//     console.log("got csrf making req with creds", csrfToken);
-//     const result = await ax_instance.post("/auth/signin", data);
-//     console.log(result);
-//     return result;
-//   } else {
-//     return null;
-//   }
-// }
 
 export const SendLoginData = async (data: LoginDataType) => {
   try {
@@ -71,4 +55,9 @@ export const SendLoginData = async (data: LoginDataType) => {
     // console.error("❌ Signin failed:", err.response ||err.message);
     throw err;
   }
+};
+
+export const AuthSessionGet = async () => {
+  const result = await ax_instance.get("/auth/session", { withCredentials: true });
+  return result;
 };
