@@ -21,9 +21,9 @@ const NameContext = createContext<NameContextType | undefined>(undefined);
 
 
 export const loginFunc = (setUserLoginInfo: React.SetStateAction<NameContextType>) => {
-  setUserLoginInfo(()=>({
+  // setUserLoginInfo(()=>({
     
-  }))
+  // }))
 };
 
 // 2

@@ -61,3 +61,8 @@ export const AuthSessionGet = async () => {
   const result = await ax_instance.get("/auth/session", { withCredentials: true });
   return result;
 };
+
+export const FetchAllUsers = async () => {
+  const result = await ax_instance.get("/api/getallUsers", { withCredentials: true });
+  return result;
+};

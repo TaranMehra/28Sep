@@ -16,7 +16,7 @@ export const ReturnResponse = (
   message: string,
   path?: string,
   error?: any,
-  data?: string,
+  data?: any,
   errorCode?: number //even in sequence of optional parameter required parameter decalring show error
 ): Response => {
   const payload: ReturnResponseApiType = {

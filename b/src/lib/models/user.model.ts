@@ -14,4 +14,8 @@ export const findUserByUsername = async (username: string) => {
   return result;
 };
 
-
+export const GetAllUsersFunc = async () => {
+  // const result = await UserModel.find().select("username");
+  const result = await UserModel.find({}, "username");
+  return result;
+};

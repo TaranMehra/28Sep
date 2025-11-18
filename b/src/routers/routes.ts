@@ -4,6 +4,7 @@ import { signUpmiddleware } from "../middlewares/signUpmiddleware.js";
 // import { SignInController } from "../controllers/SignInController.js";
 import { authenticationFunc } from "./auth.route.js";
 import { authenticatedUser } from "../middlewares/GlobalMiddleware.js";
+import { GetAllUsers } from "../controllers/GetAllUsers.js";
 
 export const route = Router();
 
@@ -13,3 +14,4 @@ route.post("/auth/sign-up", signUpmiddleware, signUpController);
 route.get("/test/hello", authenticatedUser, (req, res) => {
   return res.send("hellllloooo");
 });
+route.get("/getallUsers", authenticatedUser, GetAllUsers);
