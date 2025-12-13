@@ -15,9 +15,9 @@
     "moduleDetection": "force",
     "noEmit": true,
     /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "strict": false,
+    "noUnusedLocals": false, //if true provide error for unsuded things while build time
+    "noUnusedParameters": false,
     // "erasableSyntaxOnly": false,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true

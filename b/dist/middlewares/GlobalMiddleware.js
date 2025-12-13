@@ -6,7 +6,8 @@ export const authenticatedUser = async (req, res, next) => {
         // res.locals.session = await getSession(req, res);
         const session = await getSession(req, authConfig);
         const { username, id, email } = session?.user;
-        console.log(`session is that : ${email}`);
+        // console.log(`session is that : ${email}`);
+        console.log(`name : ${username}, password:`);
         if (!session) {
             return ReturnResponse(res, 401, false, "Unauthorized , Session Has Expired");
         }

@@ -1,5 +1,5 @@
 import { createServer } from "http";
-import express, { Router, type Request, type Response } from "express";
+import express, { Router, type NextFunction, type Request, type Response } from "express";
 import { Server } from "socket.io";
 import { WebSocketConnection } from "./helpers/WebSocketConnection.js";
 import cors from "cors";
@@ -14,12 +14,12 @@ const port = process.env.PORT || 3000;
 const app = express();
 app.use(
   cors({
-    // origin: "*",
-    origin: "http://localhost:5173",
+    // origin: "*", does not work
+    origin: ["http://192.168.1.19:5173", "http://localhost:5173"],
     credentials: true,
   })
 );
-// app.use("/auth/", authenticationFunc);
+
 app.use("/auth/", authenticationFunc);
 // app.use(/^\/auth\/.*$/, authenticationFunc);
 app.set("trust proxy", true);

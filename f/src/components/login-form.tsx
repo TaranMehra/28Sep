@@ -33,6 +33,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
     e.preventDefault();
     try {
       const result = await SendLoginData(state);
+      // console.log("what back SendLoginData gave us", result);
       const { user } = result;
       if (user) {
         // console.log("user is presenttttt :::resutl is : ", user);

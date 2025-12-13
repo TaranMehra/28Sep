@@ -7,7 +7,7 @@ export const GetAllUsers = async (req: Request, res: Response) => {
   const db = await checkConnection();
   try {
     const users = await GetAllUsersFunc();
-    console.log("users : ", users);
+    // console.log("users : ", users);
 
     return ReturnResponse(
       res,

@@ -41,6 +41,7 @@ export const authConfig: AuthConfig = {
         try {
           const { username, password } = credentials;
 
+          console.log(`${username} is tried to login`);
           await checkConnection();
 
           const user = await findUserByUsername(username as string);

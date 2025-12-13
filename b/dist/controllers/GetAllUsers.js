@@ -5,7 +5,7 @@ export const GetAllUsers = async (req, res) => {
     const db = await checkConnection();
     try {
         const users = await GetAllUsersFunc();
-        console.log("users : ", users);
+        // console.log("users : ", users);
         return ReturnResponse(res, 200, true, "All Users Fetched Successfully", "controllers/GetAllUsers", undefined, users);
     }
     catch (error) {

@@ -1,7 +1,7 @@
 import ChatBox from "@/components/ChatBox";
 import "../styles/Home.css";
 import { useEffect } from "react";
-import { createSocketConnection, SocketOperations } from "./chat/SocketLogic";
+import { createSocketConnection, SocketOperations } from "./chatLogic/SocketLogic";
 import { useName } from "@/context/createContext";
 import { useNavigate } from "react-router-dom";
 

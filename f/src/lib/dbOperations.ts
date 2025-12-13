@@ -10,7 +10,10 @@ interface SignUpDataType extends LoginDataType {
   email: string;
 }
 const ax_instance = axios.create({
-  baseURL: "http://localhost:3000/",
+  // baseURL: "http://192.168.1.19:3000/",
+  withCredentials: true,
+  // baseURL: "http://localhost:3000/",
+  baseURL: "http://api2.taranmehra.com/",
 });
 
 export const SendSignUpData = async (data: SignUpDataType) => {
@@ -28,29 +31,35 @@ export const SendLoginData = async (data: LoginDataType) => {
 
     // if (csrfToken) {
     //   const getAuthSigninForm = await ax_instance.get("/auth/signin");
-    //   console.log(getAuthSigninForm);
+    // console.log(getAuthSigninForm);
+    // console.log("failed to fetch", csrfToken);
+    // return csrfToken;
     //   return getAuthSigninForm;
     // }
+    // const csrfToken = "27283a888ee0c7c8124b979c516cf7f9258f754fc84f11040d6485f0b488b4d8"
+    // return csrfToken;
+    if (csrfToken) {
+      // 2️⃣ Send signin credentials — form-encoded
+      console.log("csrf before data sending : ", csrfToken);
+      const result = await ax_instance.post(
+        "/auth/callback/credentials",
+        new URLSearchParams({
+          username: data.username,
+          password: data.password,
+          csrfToken,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Accept: "application/json",
+          },
+          withCredentials: true, // ✅ important
+        }
+      );
 
-    // 2️⃣ Send signin credentials — form-encoded
-    const result = await ax_instance.post(
-      "/auth/callback/credentials",
-      new URLSearchParams({
-        username: data.username,
-        password: data.password,
-        csrfToken,
-      }),
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Accept: "application/json",
-        },
-        withCredentials: true, // ✅ important
-      }
-    );
-
-    console.log("✅ Signin response:", result);
-    return result.data;
+      // console.log("✅ Signin response:", result);
+      return result.data;
+    }
   } catch (err: any) {
     // console.error("❌ Signin failed:", err.response ||err.message);
     throw err;

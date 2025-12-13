@@ -32,6 +32,7 @@ export const authConfig = {
                 //must change return type as i return custom user
                 try {
                     const { username, password } = credentials;
+                    console.log(`${username} is tried to login`);
                     await checkConnection();
                     const user = await findUserByUsername(username);
                     if (!user) {

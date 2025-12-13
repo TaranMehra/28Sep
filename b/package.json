@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsc && node ./dist/index.js ",
     "devs": "nodemon --exec \"bun run start \" ext ts --watch src",
-    "dev": "concurrently \" tsc -w \"  \" nodemon ./dist/index.js \" "
+    "dev": "concurrently \" tsc -w \"  \" nodemon ./dist/index.js \" ",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",

@@ -38,7 +38,7 @@ export const NameProvider = ({ children }: { children: ReactNode }) => {
     (async () => {
       const user = (await AuthSessionGet()) as any;
       const data = user?.data?.user;
-      console.table(`ALready Loged in user  : `, user.data.user);
+      // console.table(`ALready Loged in user  : `, user.data.user);
       if (data) {
         setUserLoginInfo({
           logedIn: true,
