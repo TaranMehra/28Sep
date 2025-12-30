@@ -13,13 +13,14 @@ import {
 } from "@/components/ui/item";
 import ShowAllUsers from "@/components/ShowAllUsers";
 
-type ShowAllUsersProps = {
-  allUsersArr: [];
+
+export type UserTypes = {
+  _id: string;
+  username: string;
 };
-type UserTypes = [];
 
 function Chat() {
-  const [usersList, setusersList] = useState<UserTypes>([]);
+  const [usersList, setusersList] = useState<UserTypes[]>([]);
   useEffect(() => {
     (async () => {
       const usersArr = await FetchAllUsers();
@@ -33,7 +34,7 @@ function Chat() {
   return (
     <div className="chat-parent-container">
       <div className="chat-child-container">
-        <h1>Select Users To Chat</h1>
+        <h1>Select Users</h1>
         <div className="show-user-list-container">
           <ShowAllUsers allUsersArr={usersList} />
           {/* {usersList.map((items, index) => (

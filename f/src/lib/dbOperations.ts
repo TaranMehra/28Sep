@@ -13,7 +13,7 @@ const ax_instance = axios.create({
   // baseURL: "http://192.168.1.19:3000/",
   withCredentials: true,
   // baseURL: "http://localhost:3000/",
-  baseURL: "http://api2.taranmehra.com/",
+  baseURL: "https://chat.taranmehra.com/",
 });
 
 export const SendSignUpData = async (data: SignUpDataType) => {

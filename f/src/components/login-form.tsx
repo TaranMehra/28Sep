@@ -35,19 +35,25 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
       const result = await SendLoginData(state);
       // console.log("what back SendLoginData gave us", result);
       const { user } = result;
+
+      // if (user) {
+      console.log("user is presenttttt :::resutl is : ", user);
       if (user) {
-        // console.log("user is presenttttt :::resutl is : ", user);
-        if (user) navigate("/chat");
-        // const {  } = result.data;
-        // toast("Welcome", {
-        //   action: {
-        //     label: user ? "Home" : "OK",
-        //     onClick: () => {
-        //       if (user) redirect("/chat");
-        //       else window.location.reload();
-        //     },
-        //   },
-        // });
+        navigate("/chat");
+      }
+      // else{ window.location.reload()}
+      // const {  } = result.data;
+      // toast("Welcome", {
+      //   action: {
+      //     label: user ? "Home" : "OK",
+      //     onClick: () => {
+      //       if (user) redirect("/chat");
+      // else window.location.reload();
+      //     },
+      //   },
+      // });
+      // }
+      else {
       }
     } catch (error) {
       toast(`${error}`, {

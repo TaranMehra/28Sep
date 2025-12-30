@@ -1,4 +1,3 @@
-
 .navigation-menu-list {
   display: flex;
   gap: 1rem;
@@ -12,4 +11,7 @@
 }
 .link-color:active {
   transform: scale(110%);
+}
+.active {
+  transform: translateX(-70px);
 }

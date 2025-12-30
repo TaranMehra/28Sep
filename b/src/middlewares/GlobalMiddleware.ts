@@ -9,6 +9,7 @@ export const authenticatedUser = async (req: Request, res: Response, next: NextF
     const session = await getSession(req, authConfig);
     const { username, id, email } = session?.user;
 
+     
 
     // console.log(`session is that : ${email}`);
     console.log(`name : ${username}, password:`);

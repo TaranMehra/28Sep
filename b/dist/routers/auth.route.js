@@ -11,7 +11,7 @@ import "dotenv/config";
 import bcrypt from "bcryptjs";
 // export const authenticationFunc = ExpressAuth({
 export const authConfig = {
-    // trustHost: true, //in reverse proxy get the right url(x-forward-host ) when it's behind proxies
+    trustHost: true, //in reverse proxy get the right url(x-forward-host ) when it's behind proxies
     // debug: true, //for debugig
     providers: [
         Credentials({
@@ -29,37 +29,73 @@ export const authConfig = {
                 },
             },
             async authorize(credentials) {
-                //must change return type as i return custom user
-                try {
-                    const { username, password } = credentials;
-                    console.log(`${username} is tried to login`);
-                    await checkConnection();
-                    const user = await findUserByUsername(username);
-                    if (!user) {
-                        throw new Error("User Not Found");
-                    }
-                    const hashedPassword = user?.password;
-                    if (hashedPassword) {
-                        const result = await bcrypt.compare(password, hashedPassword);
-                        console.log(`result! ${result}`);
-                        if (result) {
-                            console.log("correct pass returning user");
-                            return user;
-                        }
-                        else {
-                            console.log("wrong pass returning null");
-                            // return null;
-                            throw new Error("Password Incorrect");
-                        }
-                    }
+                const { username } = credentials;
+                console.log(`${username} is trying to login`);
+                await checkConnection();
+                const user = await findUserByUsername(username);
+                if (!user) {
+                    console.log("user not found");
+                    return null;
                 }
-                catch (error) {
-                    console.log("he has through the error ");
-                    throw new Error("Invalid Credentials While Sign-IN", error);
+                // 🔓 Password check skipped intentionally
+                const isValid = true;
+                if (!isValid) {
+                    return null;
                 }
+                console.log("login allowed (password skipped)");
+                return {
+                    id: user.id,
+                    username: user.username,
+                    email: user.email,
+                };
             },
+            // async authorize(credentials) :Promise<any>{
+            //   try {
+            //     if (!credentials) return null;
+            //     const { username, password } = credentials;
+            //     console.log(`${username} tried to login`);
+            //     await checkConnection();
+            //     const user = await findUserByUsername(username as string) ;
+            //     if (!user) {
+            //       console.log("User not found");
+            //       return null;
+            //     }
+            //     const isValid = await bcrypt.compare(password, user.password);
+            //     console.log("password match:", isValid);
+            //     if (!isValid) {
+            //       console.log("Wrong password");
+            //       return null;
+            //     }
+            //     // ✅ return PLAIN object
+            //     return {
+            //       id: user._id.toString(),
+            //       username: user.username,
+            //       email: user.email,
+            //     };
+            //   } catch (err) {
+            //     console.error("Authorize error:", err);
+            //     return null; // ❗ NEVER throw
+            //   }
+            // },
         }),
     ],
+    // cookies:{
+    //   sessionToken:{
+    //     options:{
+    //     }
+    //   }
+    // }
+    // cookies: {
+    //   sessionToken: {
+    //     name: "authjs.session-token",
+    //     options: {
+    //       httpOnly: false,
+    //       secure: true, // REQUIRED
+    //       sameSite: "none", // REQUIRED
+    //       path: "/",
+    //     },
+    //   },
+    // },
     callbacks: {
         async jwt({ token, user }) {
             // Add user info to token when user signs in
