@@ -11,7 +11,10 @@ export const route = Router();
 //for sign-up (registering the user)
 route.post("/auth/sign-up", signUpmiddleware, signUpController);
 // route.post("/auth/*", authenticationFunc);
-route.get("/test/hello", authenticatedUser, (req, res) => {
+// route.get("/test/hello", authenticatedUser, (req, res) => {
+//   return res.send("hellllloooo");
+// });
+route.get("/test/hello", (req, res) => {
   return res.send("hellllloooo");
 });
 route.get("/getallUsers", authenticatedUser, GetAllUsers);
