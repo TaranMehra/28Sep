@@ -21,6 +21,7 @@ app.use(
       "http://localhost:3000",
       "http://chatf.taranmehra.com",
       "http://chatb.taranmehra.com",
+      "http://dock.taranmehra.com",
     ],
     credentials: true,
   })
