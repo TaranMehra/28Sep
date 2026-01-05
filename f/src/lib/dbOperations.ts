@@ -12,8 +12,8 @@ interface SignUpDataType extends LoginDataType {
 const ax_instance = axios.create({
   // baseURL: "http://192.168.1.19:3000/",
   withCredentials: true,
-  baseURL: "http://localhost:4000/",
-  // baseURL: "http://chatb.taranmehra.com/",
+  // baseURL: "http://localhost:4000/",
+  baseURL: "http://dock.taranmehra.com/api",
 });
 
 export const SendSignUpData = async (data: SignUpDataType) => {
