@@ -9,7 +9,7 @@ import { route } from "./routers/routes.js";
 import { authenticationFunc } from "./routers/auth.route.js";
 // import { ProidersCredentials } from "./routers/auth.route.js";
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 const app = express();
 app.use(
@@ -18,6 +18,7 @@ app.use(
     origin: [
       "http://192.168.1.19:5173",
       "http://localhost:5173",
+      "http://localhost:3000",
       "http://chatf.taranmehra.com",
       "http://chatb.taranmehra.com",
     ],

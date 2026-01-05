@@ -1,0 +1,25 @@
+version: "3.2"
+
+services:
+  b:
+    build: ./b
+    container_name: chat_b_c
+    ports:
+      - "4000:4000"
+    networks:
+      - chatApp-network
+    restart: unless-stopped
+  f:
+    build: ./f
+    container_name: chat_f_c
+    ports:
+      - "3000:3000"
+    networks:
+      - chatApp-network
+    depends_on:
+      - b
+    restart: unless-stopped
+
+networks:
+  chatApp-network:
+    driver: bridge
